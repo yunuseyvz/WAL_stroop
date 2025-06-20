@@ -136,7 +136,7 @@ export default function Results({ results, participantId }: ResultsProps) {
             Bitte nehmen Sie jetzt an unserer kurzen anonymen Umfrage teil, um die Studie abzuschließen.
           </p>
           <a
-            href={`https://docs.google.com/forms/d/e/1FAIpQLSfSN9tKMS6lruZBddh6iyJetzb1H1D2XlqjMMKmF4f04HVBFw/viewform?usp=pp_url&entry.333354664=${participantId}`}
+            href={`https://docs.google.com/forms/d/e/1FAIpQLScER2f2RUG9PVEPtVAyMWlCVcgIsYi2mOlqLXg0BJsityskTw/viewform?usp=pp_url&entry.1088371818=${participantId}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors duration-200"
