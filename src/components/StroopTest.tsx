@@ -27,6 +27,8 @@ export default function StroopTest({ onComplete }: StroopTestProps) {
   const [isReady, setIsReady] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
   const [feedbackCorrect, setFeedbackCorrect] = useState(false);
+  const [countdown, setCountdown] = useState<number | null>(null);
+  const [isCountingDown, setIsCountingDown] = useState(false);
 
   // Generate trials
   useEffect(() => {
@@ -59,9 +61,29 @@ export default function StroopTest({ onComplete }: StroopTestProps) {
     const generatedTrials = generateTrials();
     setTrials(generatedTrials);
     
-    // Start countdown
-    setTimeout(() => setIsReady(true), 2000);
+    // Start countdown after a brief delay
+    setTimeout(() => {
+      setIsCountingDown(true);
+      setCountdown(3);
+    }, 500);
   }, []);
+
+  // Handle countdown
+  useEffect(() => {
+    if (isCountingDown && countdown !== null) {
+      if (countdown > 0) {
+        const timer = setTimeout(() => {
+          setCountdown(countdown - 1);
+        }, 1000);
+        return () => clearTimeout(timer);
+      } else {
+        // Countdown finished, start the test
+        setIsCountingDown(false);
+        setCountdown(null);
+        setIsReady(true);
+      }
+    }
+  }, [countdown, isCountingDown]);
 
   // Start trial
   useEffect(() => {
@@ -108,13 +130,30 @@ export default function StroopTest({ onComplete }: StroopTestProps) {
     }, 800);
   }, [currentTrial, trials, currentTrialIndex, onComplete]);
 
+  if (isCountingDown && countdown !== null) {
+    return (
+      <div className="max-w-2xl mx-auto p-8 bg-white rounded-2xl shadow-lg text-center">
+        <div className="mb-8">
+          <div className="text-8xl font-bold text-blue-600 mb-4 animate-pulse">
+            {countdown > 0 ? countdown : "LOS!"}
+          </div>
+          <p className="text-lg text-gray-600">
+            {countdown > 0 ? "Test beginnt in..." : "Der Test beginnt jetzt!"}
+          </p>
+          <p className="text-sm text-gray-500 mt-2">Machen Sie sich bereit</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!isReady) {
     return (
       <div className="max-w-2xl mx-auto p-8 bg-white rounded-2xl shadow-lg text-center">
         <div className="mb-8">
-          <div className="text-6xl font-bold text-blue-600 mb-4">3</div>
-          <p className="text-lg text-gray-600">Test beginnt in Kürze...</p>
-          <p className="text-sm text-gray-500 mt-2">Machen Sie sich bereit</p>
+          <div className="text-6xl font-bold text-blue-600 mb-4">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          </div>
+          <p className="text-lg text-gray-600">Bereite Test vor...</p>
         </div>
       </div>
     );
