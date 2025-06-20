@@ -6,24 +6,6 @@ Eine moderne, webbasierte Implementierung des klassischen Stroop-Tests für das 
 
 Dieser Stroop-Test wird ausschließlich für eine Forschungsstudie im Rahmen des Moduls "Wissenschaftliches Arbeiten und Lehren" (WAL) an der LMU München verwendet. Die Studie untersucht den Zusammenhang zwischen Aufmerksamkeitsspanne und dem Konsum von Short-Form Content (TikTok, Instagram Reels usw.).
 
-## Installation
-
-1. Clone:
-```bash
-git clone <repository-url>
-cd WAL_stroop
-```
-
-2. Install Dependencies:
-```bash
-npm install
-```
-
-3. Run:
-```bash
-npm run dev
-```
-
 ## Datenbank-Integration
 
 Die Anwendung speichert alle Testergebnisse automatisch in einer externen Datenbank. 
@@ -43,6 +25,24 @@ Die Anwendung speichert alle Testergebnisse automatisch in einer externen Datenb
 - Alle Daten werden anonymisiert erhoben
 - Die Daten werden ausschließlich für akademische Forschungszwecke verwendet
 - Teilnahme ist freiwillig und kann jederzeit beendet werden
+
+## Installation
+
+1. Clone:
+```bash
+git clone <repository-url>
+cd WAL_stroop
+```
+
+2. Install Dependencies:
+```bash
+npm install
+```
+
+3. Run:
+```bash
+npm run dev
+```
 
 ## Lizenz
 
