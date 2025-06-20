@@ -1,4 +1,3 @@
-import React from 'react';
 import { Play, AlertCircle } from 'lucide-react';
 
 interface InstructionsProps {

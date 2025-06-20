@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Instructions from './components/Instructions';
 import StroopTest from './components/StroopTest';
 import Results from './components/Results';
 import { Trial, TestResults, TestPhase } from './types/stroop';
+import { DatabaseService } from './lib/database';
 
 function App() {
   const [phase, setPhase] = useState<TestPhase>('instructions');
   const [testResults, setTestResults] = useState<TestResults | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   const startTest = () => {
     setPhase('test');
   };
 
-  const completeTest = (trials: Trial[]) => {
+  const completeTest = async (trials: Trial[]) => {
     // Calculate results
     const completedTrials = trials.filter(t => t.reactionTime !== undefined);
     const correctTrials = completedTrials.filter(t => t.isCorrect);
@@ -42,12 +45,33 @@ function App() {
     };
 
     setTestResults(results);
+    
+    // Save results to database
+    setIsSaving(true);
+    setSaveError(null);
+    
+    try {
+      const saveResult = await DatabaseService.saveTestResults(results);
+      if (!saveResult.success) {
+        setSaveError(saveResult.error || 'Fehler beim Speichern der Ergebnisse');
+        console.error('Failed to save results:', saveResult.error);
+      } else {
+        console.log('Results saved successfully with ID:', saveResult.id);
+      }
+    } catch (error) {
+      setSaveError('Unerwarteter Fehler beim Speichern');
+      console.error('Unexpected error saving results:', error);
+    } finally {
+      setIsSaving(false);
+    }
+    
     setPhase('results');
   };
 
   const restartTest = () => {
     setPhase('instructions');
     setTestResults(null);
+    setSaveError(null);
   };
 
   return (
@@ -62,7 +86,12 @@ function App() {
         )}
         
         {phase === 'results' && testResults && (
-          <Results results={testResults} onRestart={restartTest} />
+          <Results 
+            results={testResults} 
+            onRestart={restartTest} 
+            isSaving={isSaving}
+            saveError={saveError}
+          />
         )}
       </div>
     </div>

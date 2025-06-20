@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Trial } from '../types/stroop';
 
 interface StroopTestProps {
@@ -53,7 +53,7 @@ export default function StroopTest({ onComplete }: StroopTestProps) {
         [trialList[i], trialList[j]] = [trialList[j], trialList[i]];
       }
 
-      return trialList.slice(0, 10); // Use first 10 trials
+      return trialList.slice(0, 10); 
     };
 
     const generatedTrials = generateTrials();

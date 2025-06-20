@@ -1,10 +1,12 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Download, BarChart3, Clock, Target, Zap } from 'lucide-react';
 import { TestResults } from '../types/stroop';
 
 interface ResultsProps {
   results: TestResults;
   onRestart: () => void;
+  isSaving?: boolean;
+  saveError?: string | null;
 }
 
 export default function Results({ results, onRestart }: ResultsProps) {
@@ -42,6 +44,12 @@ export default function Results({ results, onRestart }: ResultsProps) {
 
   return (
     <div className="max-w-4xl mx-auto p-8 bg-white rounded-2xl shadow-lg">
+      {/* Save Status */}
+      
+      
+     
+
+
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold text-gray-900 mb-4">Testergebnisse</h2>
         <div className={`inline-flex items-center px-4 py-2 rounded-full ${performance.bg}`}>
@@ -126,7 +134,7 @@ export default function Results({ results, onRestart }: ResultsProps) {
         </div>
       </div>
 
-      {/* Action buttons */}
+      {/* Action buttons 
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <button
           onClick={exportData}
@@ -143,9 +151,9 @@ export default function Results({ results, onRestart }: ResultsProps) {
           Test wiederholen
         </button>
       </div>
-
+      */}
       <div className="text-center mt-6 text-sm text-gray-500">
-        <p>Die Daten wurden lokal verarbeitet und können für Ihre Studie verwendet werden.</p>
+        <p>Die Daten wurden gespeichert. Danke für Ihre Teilnahme!</p>
       </div>
     </div>
   );
