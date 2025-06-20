@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Instructions from './components/Instructions';
 import StroopTest from './components/StroopTest';
 import Results from './components/Results';
+import Footer from './components/Footer';
 import { Trial, TestResults, TestPhase } from './types/stroop';
 import { DatabaseService } from './lib/database';
 
@@ -81,26 +82,29 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 px-4">
-      <div className="container mx-auto">
-        {phase === 'instructions' && (
-          <Instructions onStart={startTest} />
-        )}
-        
-        {phase === 'test' && (
-          <StroopTest onComplete={completeTest} />
-        )}
-        
-        {phase === 'results' && testResults && (
-          <Results 
-            results={testResults} 
-            onRestart={restartTest} 
-            isSaving={isSaving}
-            saveError={saveError}
-            participantId={participantId}
-          />
-        )}
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex flex-col">
+      <div className="flex-grow py-8 px-4">
+        <div className="container mx-auto">
+          {phase === 'instructions' && (
+            <Instructions onStart={startTest} />
+          )}
+          
+          {phase === 'test' && (
+            <StroopTest onComplete={completeTest} />
+          )}
+          
+          {phase === 'results' && testResults && (
+            <Results 
+              results={testResults} 
+              onRestart={restartTest} 
+              isSaving={isSaving}
+              saveError={saveError}
+              participantId={participantId}
+            />
+          )}
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }

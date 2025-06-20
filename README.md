@@ -1,46 +1,32 @@
 # WAL Stroop Test
 
-Eine moderne, webbasierte Implementierung des klassischen Stroop-Tests für Forschungszwecke.
+Eine moderne, webbasierte Implementierung des klassischen Stroop-Tests für das Modul **Wissenschaftliches Arbeiten und Lehren** an der Ludwig-Maximilians-Universität München.
 
-## Features
+## Zweck der Studie
 
-- 🧠 Klassischer Stroop-Test mit kongruenten und inkongruenten Trials
-- 📊 Automatische Berechnung von Reaktionszeiten und Stroop-Effekt
-- 💾 Automatische Speicherung der Ergebnisse in Supabase-Datenbank
-- 📱 Responsive Design für Desktop und Mobile
-- 🎨 Moderne Benutzeroberfläche mit Tailwind CSS
-- 📈 Detaillierte Ergebnisanalyse mit Exportfunktion
-
-## Technologie-Stack
-
-- **Frontend**: React 18 + TypeScript + Vite
-- **Styling**: Tailwind CSS
-- **Datenbank**: Supabase (PostgreSQL)
-- **Icons**: Lucide React
+Dieser Stroop-Test wird ausschließlich für eine Forschungsstudie im Rahmen des Moduls "Wissenschaftliches Arbeiten und Lehren" (WAL) an der LMU München verwendet. Die Studie untersucht den Zusammenhang zwischen Aufmerksamkeitsspanne und dem Konsum von Short-Form Content (TikTok, Instagram Reels usw.).
 
 ## Installation
 
-1. Repository klonen:
+1. Clone:
 ```bash
 git clone <repository-url>
 cd WAL_stroop
 ```
 
-2. Abhängigkeiten installieren:
+2. Install Dependencies:
 ```bash
 npm install
 ```
 
-3. Supabase einrichten (siehe [SUPABASE_SETUP.md](./SUPABASE_SETUP.md))
-
-4. Entwicklungsserver starten:
+3. Run:
 ```bash
 npm run dev
 ```
 
 ## Datenbank-Integration
 
-Die Anwendung speichert automatisch alle Testergebnisse in einer Supabase-Datenbank. Für das vollständige Setup siehe [SUPABASE_SETUP.md](./SUPABASE_SETUP.md).
+Die Anwendung speichert alle Testergebnisse automatisch in einer externen Datenbank. 
 
 ### Gespeicherte Daten
 
@@ -51,27 +37,12 @@ Die Anwendung speichert automatisch alle Testergebnisse in einer Supabase-Datenb
 - Genauigkeit (%)
 - Durchschnittliche Reaktionszeit
 - Stroop-Effekt (Differenz zwischen inkongruenten und kongruenten Trials)
-- Alle individuellen Trial-Daten
 
-## Verwendung
+## Datenschutz und akademische Nutzung
 
-1. **Anweisungen lesen**: Der Test beginnt mit einer Erklärung
-2. **Test durchführen**: 16 randomisierte Trials mit verschiedenen Farb-Wort-Kombinationen
-3. **Ergebnisse ansehen**: Automatische Auswertung mit detaillierten Metriken
-4. **Daten exportieren**: CSV-Export für weitere Analysen
-
-## Entwicklung
-
-```bash
-# Entwicklungsserver starten
-npm run dev
-
-# Build für Produktion
-npm run build
-
-# Linting
-npm run lint
-```
+- Alle Daten werden anonymisiert erhoben
+- Die Daten werden ausschließlich für akademische Forschungszwecke verwendet
+- Teilnahme ist freiwillig und kann jederzeit beendet werden
 
 ## Lizenz
 

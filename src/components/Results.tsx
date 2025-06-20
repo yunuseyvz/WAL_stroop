@@ -1,4 +1,4 @@
-import { BarChart3, Clock, Target, Zap, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { TestResults } from '../types/stroop';
 
 interface ResultsProps {
@@ -9,147 +9,38 @@ interface ResultsProps {
   participantId?: string | null;
 }
 
-export default function Results({ results, participantId }: ResultsProps) {
-  const getPerformanceLevel = () => {
-    if (results.accuracy >= 0.9 && results.stroopEffect < 100) return { level: 'Ausgezeichnet', color: 'text-green-600', bg: 'bg-green-50' };
-    if (results.accuracy >= 0.8 && results.stroopEffect < 200) return { level: 'Gut', color: 'text-blue-600', bg: 'bg-blue-50' };
-    if (results.accuracy >= 0.7) return { level: 'Durchschnittlich', color: 'text-yellow-600', bg: 'bg-yellow-50' };
-    return { level: 'Verbesserungsfähig', color: 'text-red-600', bg: 'bg-red-50' };
-  };
-
-  const performance = getPerformanceLevel();
-
+export default function Results({ participantId }: ResultsProps) {
   return (
-    <div className="max-w-4xl mx-auto p-8 bg-white rounded-2xl shadow-lg">
-      {/* Save Status */}
-      
-      
-     
-
-
+    <div className="max-w-2xl mx-auto p-8 bg-white rounded-2xl shadow-lg">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">Testergebnisse</h2>
-        <div className={`inline-flex items-center px-4 py-2 rounded-full ${performance.bg}`}>
-          <Target className={`h-5 w-5 mr-2 ${performance.color}`} />
-          <span className={`font-semibold ${performance.color}`}>
-            {performance.level}
-          </span>
-        </div>
+        <h2 className="text-3xl font-bold text-gray-900 mb-4">Test abgeschlossen</h2>
+        <p className="text-lg text-gray-600 mb-6">
+          Vielen Dank! Ihre Daten wurden erfolgreich anonymisiert gespeichert.
+        </p>
       </div>
 
-      {/* Key metrics */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="bg-blue-50 p-6 rounded-xl text-center">
-          <BarChart3 className="h-8 w-8 text-blue-600 mx-auto mb-3" />
-          <div className="text-2xl font-bold text-blue-900">
-            {(results.accuracy * 100).toFixed(1)}%
-          </div>
-          <div className="text-blue-700">Genauigkeit</div>
-        </div>
-
-        <div className="bg-green-50 p-6 rounded-xl text-center">
-          <Clock className="h-8 w-8 text-green-600 mx-auto mb-3" />
-          <div className="text-2xl font-bold text-green-900">
-            {results.averageReactionTime.toFixed(0)}ms
-          </div>
-          <div className="text-green-700">Ø Reaktionszeit</div>
-        </div>
-
-        <div className="bg-purple-50 p-6 rounded-xl text-center">
-          <Zap className="h-8 w-8 text-purple-600 mx-auto mb-3" />
-          <div className="text-2xl font-bold text-purple-900">
-            {results.stroopEffect.toFixed(0)}ms
-          </div>
-          <div className="text-purple-700">Stroop-Effekt</div>
-        </div>
-
-        <div className="bg-orange-50 p-6 rounded-xl text-center">
-          <Target className="h-8 w-8 text-orange-600 mx-auto mb-3" />
-          <div className="text-2xl font-bold text-orange-900">
-            {results.correctResponses}/{results.totalTrials}
-          </div>
-          <div className="text-orange-700">Richtige Antworten</div>
-        </div>
-      </div>
-
-      {/* Detailed analysis */}
-      <div className="grid md:grid-cols-2 gap-6 mb-8">
-        <div className="bg-gray-50 p-6 rounded-xl">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Detailanalyse</h3>
-          <div className="space-y-3">
-            <div className="flex justify-between">
-              <span className="text-gray-600">Kongruente Trials (Ø):</span>
-              <span className="font-semibold">{results.congruentAverageRT.toFixed(0)}ms</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Inkongruente Trials (Ø):</span>
-              <span className="font-semibold">{results.incongruentAverageRT.toFixed(0)}ms</span>
-            </div>
-            <div className="flex justify-between border-t pt-3">
-              <span className="text-gray-600">Interferenz-Effekt:</span>
-              <span className="font-semibold text-red-600">+{results.stroopEffect.toFixed(0)}ms</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-gray-50 p-6 rounded-xl">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Interpretation</h3>
-          <div className="text-sm text-gray-700 space-y-2">
-            <p>
-              <strong>Stroop-Effekt:</strong> Misst die kognitive Interferenz. 
-              Niedrigere Werte zeigen bessere Aufmerksamkeitskontrolle.
-            </p>
-            <p>
-              <strong>Reaktionszeit:</strong> Durchschnittliche Zeit für alle Antworten. 
-              Normale Werte liegen zwischen 500-1000ms.
-            </p>
-            <p>
-              <strong>Genauigkeit:</strong> Prozentsatz korrekter Antworten. 
-              Werte über 80% gelten als gut.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Action buttons 
-      <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <button
-          onClick={exportData}
-          className="inline-flex items-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl transition-colors duration-200"
-        >
-          <Download className="h-5 w-5 mr-2" />
-          Daten exportieren (CSV)
-        </button>
-        
-        <button
-          onClick={onRestart}
-          className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors duration-200"
-        >
-          Test wiederholen
-        </button>
-      </div>
-      */}
       {/* Umfrage-Link */}
       {participantId && (
-        <div className="bg-blue-50 border border-blue-200 p-6 rounded-xl mb-6">
-          <p className="text-blue-700 mb-4">
-            Bitte nehmen Sie jetzt an unserer kurzen anonymen Umfrage teil, um die Studie abzuschließen.
+        <div className="bg-blue-50 border border-blue-200 p-8 rounded-xl text-center">
+          <h3 className="text-xl font-semibold text-blue-900 mb-4">
+            Letzter Schritt: Debriefing & Umfrage
+          </h3>
+          <p className="text-blue-700 mb-6">
+            Um die Studie abzuschließen, finden Sie hier das Debriefing und eine kurze Umfrage. 
+            Das Debriefing erklärt Ihnen den Hintergrund des Tests, und Ihre Antworten in der Umfrage 
+            sind wichtig für unsere Forschung.
           </p>
           <a
             href={`https://docs.google.com/forms/d/e/1FAIpQLScER2f2RUG9PVEPtVAyMWlCVcgIsYi2mOlqLXg0BJsityskTw/viewform?usp=pp_url&entry.1088371818=${participantId}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors duration-200"
+            className="inline-flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors duration-200 text-lg"
           >
-            <ExternalLink className="h-5 w-5 mr-2" />
-            Zur Umfrage
+            <ExternalLink className="h-6 w-6 mr-3" />
+            Zum Debriefing & zur Umfrage
           </a>
         </div>
       )}
-
-      <div className="text-center mt-6 text-sm text-gray-500">
-        <p>Die Daten wurden anonymisiert gespeichert.</p>
-      </div>
     </div>
   );
 }

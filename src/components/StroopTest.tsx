@@ -6,7 +6,7 @@ interface StroopTestProps {
 }
 
 const COLORS = ['ROT', 'BLAU', 'GRÜN', 'GELB'];
-const NUM_TRIALS = 20; 
+const NUM_TRIALS = 25; 
 
 const COLOR_CLASSES = {
   'ROT': 'text-red-500',
@@ -27,8 +27,6 @@ export default function StroopTest({ onComplete }: StroopTestProps) {
   const [currentTrialIndex, setCurrentTrialIndex] = useState(0);
   const [currentTrial, setCurrentTrial] = useState<Trial | null>(null);
   const [isReady, setIsReady] = useState(false);
-  const [showFeedback, setShowFeedback] = useState(false);
-  const [feedbackCorrect, setFeedbackCorrect] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
   const [isCountingDown, setIsCountingDown] = useState(false);
 
@@ -135,21 +133,13 @@ export default function StroopTest({ onComplete }: StroopTestProps) {
     updatedTrials[currentTrialIndex] = completedTrial;
     setTrials(updatedTrials);
 
-    // Show feedback
-    setFeedbackCorrect(isCorrect);
-    setShowFeedback(true);
-
-    setTimeout(() => {
-      setShowFeedback(false);
-      
-      if (currentTrialIndex + 1 >= trials.length) {
-        // Test complete
-        onComplete(updatedTrials);
-      } else {
-        // Next trial
-        setCurrentTrialIndex(prev => prev + 1);
-      }
-    }, 800);
+    if (currentTrialIndex + 1 >= trials.length) {
+      // Test complete
+      onComplete(updatedTrials);
+    } else {
+      // Next trial
+      setCurrentTrialIndex(prev => prev + 1);
+    }
   }, [currentTrial, trials, currentTrialIndex, onComplete]);
 
   if (isCountingDown && countdown !== null) {
@@ -177,19 +167,6 @@ export default function StroopTest({ onComplete }: StroopTestProps) {
           </div>
           <p className="text-lg text-gray-600">Bereite Test vor...</p>
         </div>
-      </div>
-    );
-  }
-
-  if (showFeedback) {
-    return (
-      <div className="max-w-2xl mx-auto p-8 bg-white rounded-2xl shadow-lg text-center">
-        <div className={`text-6xl font-bold mb-4 ${feedbackCorrect ? 'text-green-500' : 'text-red-500'}`}>
-          {feedbackCorrect ? '✓' : '✗'}
-        </div>
-        <p className={`text-lg ${feedbackCorrect ? 'text-green-600' : 'text-red-600'}`}>
-          {feedbackCorrect ? 'Richtig!' : 'Falsch'}
-        </p>
       </div>
     );
   }
