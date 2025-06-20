@@ -17,10 +17,11 @@ export interface DatabaseTestResult {
 }
 
 export class DatabaseService {
-  static async saveTestResults(results: TestResults, participantId?: string): Promise<{ success: boolean; error?: string; id?: string }> {
+  static async saveTestResults(results: TestResults, participantId?: string): Promise<{ success: boolean; error?: string; id?: string; participantId?: string }> {
     try {
+      const generatedParticipantId = participantId || this.generateParticipantId();
       const testResult: DatabaseTestResult = {
-        participant_id: participantId || this.generateParticipantId(),
+        participant_id: generatedParticipantId,
         test_date: new Date().toISOString(),
         total_trials: results.totalTrials,
         correct_responses: results.correctResponses,
@@ -43,7 +44,7 @@ export class DatabaseService {
         return { success: false, error: error.message };
       }
 
-      return { success: true, id: data.id };
+      return { success: true, id: data.id, participantId: generatedParticipantId };
     } catch (error) {
       console.error('Unexpected error saving test results:', error);
       return { success: false, error: 'Unerwarteter Fehler beim Speichern' };
@@ -76,6 +77,7 @@ export class DatabaseService {
   }
 
   private static generateParticipantId(): string {
-    return `participant_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const randomId = Math.floor(Math.random() * 90000000) + 10000000;
+    return randomId.toString();
   }
 }

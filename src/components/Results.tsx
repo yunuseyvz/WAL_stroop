@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Download, BarChart3, Clock, Target, Zap } from 'lucide-react';
+import { BarChart3, Clock, Target, Zap, ExternalLink } from 'lucide-react';
 import { TestResults } from '../types/stroop';
 
 interface ResultsProps {
@@ -7,32 +6,10 @@ interface ResultsProps {
   onRestart: () => void;
   isSaving?: boolean;
   saveError?: string | null;
+  participantId?: string | null;
 }
 
-export default function Results({ results, onRestart }: ResultsProps) {
-  const exportData = () => {
-    const csvContent = [
-      ['Trial', 'Word', 'Color', 'Congruent', 'Response', 'Correct', 'Reaction Time (ms)'],
-      ...results.trials.map(trial => [
-        trial.id,
-        trial.word,
-        trial.color,
-        trial.isCongruent ? 'Yes' : 'No',
-        trial.userResponse || 'No Response',
-        trial.isCorrect ? 'Yes' : 'No',
-        trial.reactionTime || 0
-      ])
-    ].map(row => row.join(',')).join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `stroop_test_results_${new Date().toISOString().split('T')[0]}.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
+export default function Results({ results, participantId }: ResultsProps) {
   const getPerformanceLevel = () => {
     if (results.accuracy >= 0.9 && results.stroopEffect < 100) return { level: 'Ausgezeichnet', color: 'text-green-600', bg: 'bg-green-50' };
     if (results.accuracy >= 0.8 && results.stroopEffect < 200) return { level: 'Gut', color: 'text-blue-600', bg: 'bg-blue-50' };
@@ -152,8 +129,26 @@ export default function Results({ results, onRestart }: ResultsProps) {
         </button>
       </div>
       */}
+      {/* Umfrage-Link */}
+      {participantId && (
+        <div className="bg-blue-50 border border-blue-200 p-6 rounded-xl mb-6">
+          <p className="text-blue-700 mb-4">
+            Bitte nehmen Sie jetzt an unserer kurzen anonymen Umfrage teil, um die Studie abzuschließen.
+          </p>
+          <a
+            href={`https://docs.google.com/forms/d/e/1FAIpQLSfSN9tKMS6lruZBddh6iyJetzb1H1D2XlqjMMKmF4f04HVBFw/viewform?usp=pp_url&entry.333354664=${participantId}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors duration-200"
+          >
+            <ExternalLink className="h-5 w-5 mr-2" />
+            Zur Umfrage
+          </a>
+        </div>
+      )}
+
       <div className="text-center mt-6 text-sm text-gray-500">
-        <p>Die Daten wurden gespeichert. Danke für Ihre Teilnahme!</p>
+        <p>Die Daten wurden anonymisiert gespeichert.</p>
       </div>
     </div>
   );

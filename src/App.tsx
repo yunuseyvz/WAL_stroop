@@ -10,6 +10,7 @@ function App() {
   const [testResults, setTestResults] = useState<TestResults | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [participantId, setParticipantId] = useState<string | null>(null);
 
   const startTest = () => {
     setPhase('test');
@@ -57,6 +58,10 @@ function App() {
         console.error('Failed to save results:', saveResult.error);
       } else {
         console.log('Results saved successfully with ID:', saveResult.id);
+        // Speichere die Teilnehmer-ID für den Umfrage-Link
+        if (saveResult.participantId) {
+          setParticipantId(saveResult.participantId);
+        }
       }
     } catch (error) {
       setSaveError('Unerwarteter Fehler beim Speichern');
@@ -72,6 +77,7 @@ function App() {
     setPhase('instructions');
     setTestResults(null);
     setSaveError(null);
+    setParticipantId(null);
   };
 
   return (
@@ -91,6 +97,7 @@ function App() {
             onRestart={restartTest} 
             isSaving={isSaving}
             saveError={saveError}
+            participantId={participantId}
           />
         )}
       </div>
