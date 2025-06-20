@@ -6,6 +6,8 @@ interface StroopTestProps {
 }
 
 const COLORS = ['ROT', 'BLAU', 'GRÜN', 'GELB'];
+const NUM_TRIALS = 20; 
+
 const COLOR_CLASSES = {
   'ROT': 'text-red-500',
   'BLAU': 'text-blue-500',
@@ -55,20 +57,41 @@ export default function StroopTest({ onComplete }: StroopTestProps) {
         [trialList[i], trialList[j]] = [trialList[j], trialList[i]];
       }
 
-      return trialList.slice(0, 10); 
+      if (NUM_TRIALS > trialList.length) {
+        const repetitions = Math.ceil(NUM_TRIALS / trialList.length);
+        const expandedTrials: Trial[] = [];
+        let currentId = 1;
+        
+        for (let rep = 0; rep < repetitions; rep++) {
+          const shuffledCopy = [...trialList];
+          for (let i = shuffledCopy.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffledCopy[i], shuffledCopy[j]] = [shuffledCopy[j], shuffledCopy[i]];
+          }
+          
+          shuffledCopy.forEach(trial => {
+            expandedTrials.push({
+              ...trial,
+              id: currentId++
+            });
+          });
+        }
+        
+        return expandedTrials.slice(0, NUM_TRIALS);
+      }
+
+      return trialList.slice(0, NUM_TRIALS); 
     };
 
     const generatedTrials = generateTrials();
     setTrials(generatedTrials);
     
-    // Start countdown after a brief delay
     setTimeout(() => {
       setIsCountingDown(true);
       setCountdown(3);
     }, 500);
   }, []);
 
-  // Handle countdown
   useEffect(() => {
     if (isCountingDown && countdown !== null) {
       if (countdown > 0) {
@@ -77,7 +100,6 @@ export default function StroopTest({ onComplete }: StroopTestProps) {
         }, 1000);
         return () => clearTimeout(timer);
       } else {
-        // Countdown finished, start the test
         setIsCountingDown(false);
         setCountdown(null);
         setIsReady(true);

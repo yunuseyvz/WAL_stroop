@@ -29,6 +29,7 @@ export default function Instructions({ onStart }: InstructionsProps) {
                 <li>• <strong>Ignorieren Sie das Wort</strong> und klicken Sie auf die Farbe, in der das Wort geschrieben ist</li>
                 <li>• Antworten Sie so schnell und genau wie möglich</li>
                 <li>• Der Test dauert etwa 2-3 Minuten</li>
+                <li>• Im Anschluss folgt das Debriefing und eine kurze Umfrage.</li>
               </ul>
             </div>
           </div>
