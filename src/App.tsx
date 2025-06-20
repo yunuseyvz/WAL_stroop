@@ -52,13 +52,14 @@ function App() {
     setIsSaving(true);
     setSaveError(null);
     
+    
     try {
       const saveResult = await DatabaseService.saveTestResults(results);
       if (!saveResult.success) {
         setSaveError(saveResult.error || 'Fehler beim Speichern der Ergebnisse');
         console.error('Failed to save results:', saveResult.error);
       } else {
-        console.log('Results saved successfully with ID:', saveResult.id);
+        console.log('Results saved successfully with ID:', saveResult.participantId);
         // Speichere die Teilnehmer-ID für den Umfrage-Link
         if (saveResult.participantId) {
           setParticipantId(saveResult.participantId);

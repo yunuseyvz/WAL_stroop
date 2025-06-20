@@ -29,15 +29,15 @@ export default function TestInstructions({ onStart, onBack }: TestInstructionsPr
       </div>
       
       <div className="space-y-6 mb-8">
-        <div className="bg-blue-50 border-l-4 border-blue-400 p-6 rounded-r-lg">
+        <div className="bg-blue-50 border-l-4 border-blue-400 p-6 rounded-lg">
           <div className="flex items-start">
             <AlertCircle className="h-6 w-6 text-blue-400 mt-1 mr-3 flex-shrink-0" />
             <div>
-              <h3 className="text-lg font-semibold text-blue-900 mb-2">
+              <h3 className="text-md font-semibold text-blue-900 mb-2">
                 Anweisungen:
               </h3>
-              <ul className="text-blue-800 space-y-2">
-                <li>• Sie sehen Farbwörter, die in verschiedenen Farben dargestellt werden</li>
+              <ul className="text-blue-800 space-y-2 text-sm">
+                <li className="text-md">• Sie sehen Farbwörter, die in verschiedenen Farben dargestellt werden</li>
                 <li>• <strong>Ignorieren Sie das Wort</strong> und klicken Sie auf die Farbe, in der das Wort geschrieben ist</li>
                 <li>• Antworten Sie so schnell und genau wie möglich</li>
                 <li>• Der Test dauert etwa 2-3 Minuten</li>
@@ -84,7 +84,7 @@ export default function TestInstructions({ onStart, onBack }: TestInstructionsPr
             onChange={(e) => setConsentGiven(e.target.checked)}
             className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
           />
-          <label htmlFor="consent" className="text-sm text-gray-700 cursor-pointer">
+          <label htmlFor="consent" className="text-sm text-gray-700 cursor-pointer text-justify hyphens-auto">
             Ich bestätige, dass ich mit der Teilnahme an diesem Test und der 
             anonymisierten Verarbeitung meiner Daten zu Forschungszwecken einverstanden bin. 
             Alle Daten werden ausschließlich für wissenschaftliche Zwecke verwendet und 
@@ -121,7 +121,7 @@ export default function TestInstructions({ onStart, onBack }: TestInstructionsPr
           <p className="text-sm text-gray-500 mt-3">
             {consentGiven 
               ? 'Bereit? Dann können wir beginnen!' 
-              : 'Einverständniserklärung bestätigen.'
+              : 'Einverständniserklärung bestätigen'
             }
           </p>
         </div>
