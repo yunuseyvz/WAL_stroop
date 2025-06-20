@@ -1,4 +1,4 @@
-import { Play, AlertCircle, ArrowLeft } from 'lucide-react';
+import { Play, AlertCircle, ArrowLeft, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 
 interface TestInstructionsProps {
@@ -17,6 +17,15 @@ export default function TestInstructions({ onStart, onBack }: TestInstructionsPr
         <p className="text-lg text-gray-600">
           Ein kurzer Test zur Messung Ihrer Aufmerksamkeit und Reaktionszeit
         </p>
+        <a
+          href="https://www.neuronation.com/science/de/der-stroop-test/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center mt-3 text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors duration-200"
+        >
+          <ExternalLink className="h-4 w-4 mr-1" />
+          Mehr zum Stroop-Test
+        </a>
       </div>
       
       <div className="space-y-6 mb-8">
