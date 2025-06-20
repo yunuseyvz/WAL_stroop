@@ -69,7 +69,10 @@ export default function WelcomeScreen({ onContinue }: WelcomeScreenProps) {
 
       <div className="text-center">
         <button
-          onClick={onContinue}
+          onClick={() => {
+            window.scrollTo({ top: 0 });
+            onContinue();
+          }}
           className="inline-flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
         >
           Weiter zu den Anweisungen

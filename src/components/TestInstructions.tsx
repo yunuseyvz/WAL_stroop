@@ -86,7 +86,10 @@ export default function TestInstructions({ onStart, onBack }: TestInstructionsPr
 
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <button
-          onClick={onBack}
+          onClick={() => {
+            window.scrollTo({ top: 0 });
+            onBack();
+          }}
           className="inline-flex items-center justify-center px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold rounded-xl transition-colors duration-200 sm:justify-start"
         >
           <ArrowLeft className="h-5 w-5 mr-2" />
