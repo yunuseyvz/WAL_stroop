@@ -1,12 +1,15 @@
-import { Play, AlertCircle, ArrowLeft, ExternalLink } from 'lucide-react';
-import { useState } from 'react';
+import { Play, AlertCircle, ArrowLeft, ExternalLink } from "lucide-react";
+import { useState } from "react";
 
 interface TestInstructionsProps {
   onStart: () => void;
   onBack: () => void;
 }
 
-export default function TestInstructions({ onStart, onBack }: TestInstructionsProps) {
+export default function TestInstructions({
+  onStart,
+  onBack,
+}: TestInstructionsProps) {
   const [consentGiven, setConsentGiven] = useState(false);
   return (
     <div className="max-w-4xl mx-auto p-8 bg-white rounded-2xl shadow-lg">
@@ -27,7 +30,7 @@ export default function TestInstructions({ onStart, onBack }: TestInstructionsPr
           Mehr zum Stroop-Test
         </a>
       </div>
-      
+
       <div className="space-y-6 mb-8">
         <div className="bg-blue-50 border-l-4 border-blue-400 p-6 rounded-lg">
           <div className="flex items-start">
@@ -37,12 +40,23 @@ export default function TestInstructions({ onStart, onBack }: TestInstructionsPr
                 Anweisungen:
               </h3>
               <ul className="text-blue-800 space-y-2 text-sm">
-                <li className="text-md">• Sie sehen Farbwörter, die in verschiedenen Farben dargestellt werden</li>
-                <li>• <strong>Ignorieren Sie das Wort</strong> und klicken Sie auf die Farbe, in der das Wort geschrieben ist</li>
+                <li className="text-md">
+                  • Sie sehen Farbwörter, die in verschiedenen Farben
+                  dargestellt werden
+                </li>
+                <li>
+                  • <strong>Ignorieren Sie das Wort</strong> und klicken Sie auf
+                  die Farbe, in der das Wort geschrieben ist
+                </li>
                 <li>• Antworten Sie so schnell und genau wie möglich</li>
                 <li>• Der Test dauert etwa 2-3 Minuten</li>
-                <li>• Stellen Sie sicher, dass Sie sich in einer ruhigen Umgebung befinden</li>
-                <li>• Im Anschluss folgt das Debriefing und eine kurze Umfrage.</li>
+                <li>
+                  • Stellen Sie sicher, dass Sie sich in einer ruhigen Umgebung
+                  befinden
+                </li>
+                <li>
+                  • Im Anschluss folgt das Debriefing und eine kurze Umfrage.
+                </li>
               </ul>
             </div>
           </div>
@@ -50,28 +64,35 @@ export default function TestInstructions({ onStart, onBack }: TestInstructionsPr
 
         <div className="grid md:grid-cols-2 gap-6">
           <div className="bg-green-50 p-6 rounded-xl">
-            <h4 className="font-semibold text-green-900 mb-3">Beispiel - Richtig:</h4>
+            <h4 className="font-semibold text-green-900 mb-3">
+              Beispiel - Richtig:
+            </h4>
             <div className="bg-white p-4 rounded-lg border-2 border-green-200 text-center">
               <div className="text-3xl font-bold text-red-500 mb-3">BLAU</div>
               <p className="text-sm text-green-700">
-                Das Wort ist in <span className="font-semibold text-red-500">ROT</span> geschrieben
+                Das Wort ist in{" "}
+                <span className="font-semibold text-red-500">ROT</span>{" "}
+                geschrieben
                 <br />→ Klicken Sie auf <strong>ROT</strong>
               </p>
             </div>
           </div>
 
           <div className="bg-red-50 p-6 rounded-xl">
-            <h4 className="font-semibold text-red-900 mb-3">Beispiel - Falsch:</h4>
+            <h4 className="font-semibold text-red-900 mb-3">
+              Beispiel - Falsch:
+            </h4>
             <div className="bg-white p-4 rounded-lg border-2 border-red-200 text-center">
               <div className="text-3xl font-bold text-blue-500 mb-3">GRÜN</div>
               <p className="text-sm text-red-700">
-                Das Wort ist in <span className="font-semibold text-blue-500">BLAU</span> geschrieben
+                Das Wort ist in{" "}
+                <span className="font-semibold text-blue-500">BLAU</span>{" "}
+                geschrieben
                 <br />→ <strong>Nicht</strong> auf GRÜN klicken!
               </p>
             </div>
           </div>
         </div>
-
       </div>
 
       {/* Data consent section */}
@@ -84,11 +105,15 @@ export default function TestInstructions({ onStart, onBack }: TestInstructionsPr
             onChange={(e) => setConsentGiven(e.target.checked)}
             className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
           />
-          <label htmlFor="consent" className="text-sm text-gray-700 cursor-pointer text-justify hyphens-auto">
-            Ich bestätige, dass ich mit der Teilnahme an diesem Test und der 
-            anonymisierten Verarbeitung meiner Daten zu Forschungszwecken einverstanden bin. 
-            Alle Daten werden ausschließlich für wissenschaftliche Zwecke verwendet und 
-            können nicht zu meiner Person zurückverfolgt werden.
+          <label
+            htmlFor="consent"
+            className="text-sm text-gray-700 cursor-pointer text-justify hyphens-auto"
+          >
+            Ich bestätige, dass ich mit der Teilnahme an diesem Test und der
+            anonymisierten Verarbeitung meiner Daten zu Forschungszwecken
+            einverstanden bin. Alle Daten werden ausschließlich für
+            wissenschaftliche Zwecke verwendet und können nicht zu meiner Person
+            zurückverfolgt werden.
           </label>
         </div>
       </div>
@@ -104,25 +129,27 @@ export default function TestInstructions({ onStart, onBack }: TestInstructionsPr
           <ArrowLeft className="h-5 w-5 mr-2" />
           Zurück
         </button>
-        
+
         <div className="text-center flex-1 sm:flex-none">
           <button
-            onClick={onStart}
+            onClick={() => {
+              onStart();
+              window.scrollTo({ top: 0 });
+            }}
             disabled={!consentGiven}
             className={`inline-flex items-center justify-center px-8 py-4 font-semibold rounded-xl transition-colors duration-200 shadow-lg transform w-full sm:w-auto ${
               consentGiven
-                ? 'bg-blue-600 hover:bg-blue-700 text-white hover:shadow-xl hover:-translate-y-0.5'
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                ? "bg-blue-600 hover:bg-blue-700 text-white hover:shadow-xl hover:-translate-y-0.5"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }`}
           >
             <Play className="h-5 w-5 mr-2" />
             Test starten
           </button>
           <p className="text-sm text-gray-500 mt-3">
-            {consentGiven 
-              ? 'Bereit? Dann können wir beginnen!' 
-              : 'Einverständniserklärung bestätigen'
-            }
+            {consentGiven
+              ? "Bereit? Dann können wir beginnen!"
+              : "Einverständniserklärung bestätigen"}
           </p>
         </div>
       </div>
